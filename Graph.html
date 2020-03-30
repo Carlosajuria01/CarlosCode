@@ -1,0 +1,96 @@
+<html>
+
+    <head>
+        <link href="mystyles.css" rel="stylesheet">
+        <script src="csvjson.json"></script>
+    
+    </head>
+
+    <body>
+        <div class="topnav">
+          <a href="index.html">Home</a>
+          <a href="content.html">Content</a>
+          <a class="active" href="Graph.html">Graph</a>
+        </div>
+        
+        <h1>Graph</h1>
+        
+        <h4>Enter Country Name</h4><input type="text" id="mysearch">
+        <button onclick="drawGraph()">Submit</button>
+        
+        <div id="mydata"></div>
+        
+        <canvas id="myCanvas" width="1500" height="1000"></canvas>
+        
+    </body>
+    
+    <script>
+        
+        function goSearch(){
+            var myinput = document.getElementById("mysearch").value;
+            var resultsdiv = document.getElementById("results");
+            var newstring = ""
+        }
+        
+        
+        //getData();
+        drawGraph();
+        
+        function getData() {
+            var mydiv = document.getElementById("mydata");
+            mydiv.innerHTML = data[0]['GeoAreaName'] + " percentage of renewable energy in the global energy mix."
+            //mydiv.innerHTML = data[0]['GeoAreaName'] + " " + data[58]['Value'] + "%";
+            
+        }
+        
+        function drawGraph() {
+            var c = document.getElementById("myCanvas");
+            var ctx = c.getContext("2d");
+            var myinput = document.getElementById("mysearch").value.toUpperCase();
+        
+            var mydiv = document.getElementById("mydata");
+            
+            // draw some values * 10
+            y=10
+            var isFound = false;
+            for (num = 0; num < data.length; num++) {
+                if (myinput == data[num].GeoAreaName.toUpperCase()){
+                    ctx.fillStyle = "blue";
+                    ctx.fillRect(0,y,data[num].Value*25,30);
+                    console.log(data[num].Value)
+                    y = y + 50
+                    
+                
+                    ctx.font = "15px Arial";
+                    ctx.fillStyle = "white";
+                    ctx.fillText(data[num]['TimePeriod'],10,y-30);
+                    
+                    ctx.fillStyle = "white";
+                    ctx.fillText(data[num]['Value']+"%",100,y-30);
+                    
+                    isFound = true;
+                    
+                    //mystr = mystr + data[num]['GeoAreaName'] + " percentage of renewable energy in the global energy mix."
+                  
+            }
+            
+            if (isFound == true) {
+                mydiv.innerHTML = myinput + " percentage of renewable energy in the global energy mix.";
+            } else {
+                mydiv.innerHTML = " Please enter a valid country name"
+            }
+            
+               
+         }
+            
+            
+            
+            
+            
+    
+                }
+        
+    </script>
+    
+    
+</html>
